@@ -426,6 +426,7 @@ int td_io_init(struct thread_data *td)
 	return ret;
 }
 
+// zhou:
 void td_io_commit(struct thread_data *td)
 {
 	int ret;

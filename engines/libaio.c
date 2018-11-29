@@ -520,6 +520,7 @@ static int fio_libaio_io_u_init(struct thread_data *td, struct io_u *io_u)
 	return 0;
 }
 
+// zhou: linux kernel aio, NOT glibc aio.
 static struct ioengine_ops ioengine = {
 	.name			= "libaio",
 	.version		= FIO_IOOPS_VERSION,

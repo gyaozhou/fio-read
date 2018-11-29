@@ -25,3 +25,5 @@ lex.yy.c
 doc/output
 /tags
 /TAGS
+
+cscope.files
