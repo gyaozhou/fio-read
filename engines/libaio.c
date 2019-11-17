@@ -427,6 +427,7 @@ static int fio_libaio_old_queue_init(struct libaio_data *ld, unsigned int depth,
 		return 1;
 	}
 
+    // zhou: equal to "io_setup()"
 	return io_queue_init(depth, &ld->aio_ctx);
 }
 
@@ -443,6 +444,7 @@ static int fio_libaio_queue_init(struct libaio_data *ld, unsigned int depth,
 	if (fixedbufs)
 		flags |= IOCTX_FLAG_FIXEDBUFS;
 
+    // zhou: https://brick.kernel.dk/snaps/aio-ring.c
 	ret = syscall(__NR_sys_io_setup2, depth, flags, ld->user_iocbs,
 			&ld->aio_ctx);
 	if (!ret)
