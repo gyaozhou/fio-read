@@ -28,6 +28,8 @@
 #define IOCTX_FLAG_FIXEDBUFS	(1 << 2)
 #endif
 
+// zhou: used by aws/ebs/ld
+
 static int fio_libaio_commit(struct thread_data *td);
 
 struct libaio_data {

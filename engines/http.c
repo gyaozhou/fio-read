@@ -637,6 +637,7 @@ static int fio_http_invalidate(struct thread_data *td, struct fio_file *f)
 	return 0;
 }
 
+// zhou: README,
 static struct ioengine_ops ioengine = {
 	.name = "http",
 	.version		= FIO_IOOPS_VERSION,

@@ -588,6 +588,7 @@ static void show_lat_m(double *io_u_lat_m, struct buf_output *out)
 	show_lat(io_u_lat_m, FIO_IO_U_LAT_M_NR, ranges, "msec", out);
 }
 
+// zhou: show latency
 static void show_latencies(struct thread_stat *ts, struct buf_output *out)
 {
 	double io_u_lat_n[FIO_IO_U_LAT_N_NR];
@@ -786,7 +787,7 @@ static void show_thread_status_normal(struct thread_stat *ts,
 
 	if (!ddir_rw_sum(ts->io_bytes) && !ddir_rw_sum(ts->total_io_u))
 		return;
-		
+
 	memset(time_buf, 0, sizeof(time_buf));
 
 	time(&time_p);
@@ -2502,7 +2503,7 @@ void add_clat_sample(struct thread_data *td, enum fio_ddir ddir,
 		if (!hw->hist_last)
 			hw->hist_last = elapsed;
 		this_window = elapsed - hw->hist_last;
-		
+
 		if (this_window >= iolog->hist_msec) {
 			uint64_t *io_u_plat;
 			struct io_u_plat_entry *dst;
