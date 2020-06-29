@@ -52,6 +52,7 @@ struct zone_split {
 
 #define OPT_MAGIC	0x4f50544e
 
+// zhou:
 struct thread_options {
 	int magic;
 	uint64_t set_options[NR_OPTS_SZ];
@@ -71,8 +72,14 @@ struct thread_options {
 	unsigned int unit_base;
 	unsigned int ddir_seq_nr;
 	long long ddir_seq_add;
+    // zhou: "iodepth=int "
+    //       Number of I/O units to keep in flight against the file. Note that increasing iodepth beyond 1 will not affect synchronous ioengines (except for small degress when verify_async is in use). Even async engines my impose OS restrictions causing the desired depth not to be achieved. This may happen on Linux when using libaio and not setting direct=1, since buffered IO is not async on that OS. Keep an eye on the IO depth distribution in the fio output to verify that the achieved depth is as expected. Default: 1.
 	unsigned int iodepth;
+    // zhou: "iodepth_low=int"
+    //       Low watermark indicating when to start filling the queue again. Default: iodepth.
 	unsigned int iodepth_low;
+    // zhou: "iodepth_batch=int"
+    //       Number of I/Os to submit at once. Default: iodepth.
 	unsigned int iodepth_batch;
 	unsigned int iodepth_batch_complete_min;
 	unsigned int iodepth_batch_complete_max;
@@ -87,6 +94,8 @@ struct thread_options {
 	unsigned int file_append;
 	unsigned long long file_size_low;
 	unsigned long long file_size_high;
+    // zhou: "offset=int"
+    //       Offset in the file to start I/O. Data before the offset will not be touched.
 	unsigned long long start_offset;
 	unsigned long long start_offset_align;
 
@@ -104,7 +113,10 @@ struct thread_options {
 	unsigned int nr_files;
 	unsigned int open_files;
 	enum file_lock_mode file_lock_mode;
-
+    // zhou: "direct=bool"
+    //       If true, use non-buffered I/O (usually O_DIRECT). Default: false
+    //       "buffered=bool"
+    //       If true, use buffered I/O. This is the opposite of the direct parameter. Default: true.
 	unsigned int odirect;
 	unsigned int oatomic;
 	unsigned int invalidate_cache;
@@ -155,7 +167,8 @@ struct thread_options {
 	unsigned int bs_is_seq_rand;
 
 	unsigned int verify_only;
-
+    // zhou: “andom_distribution=str:float“
+    //       By default, fio will use a completely uniform random distribution when asked to perform random IO. Sometimes it is useful to skew the distribution in specific ways, ensuring that some parts of the data is more hot than others. Fio includes the following distribution models:
 	unsigned int random_distribution;
 	unsigned int exitall_error;
 
@@ -175,7 +188,11 @@ struct thread_options {
 	unsigned int thinktime;
 	unsigned int thinktime_spin;
 	unsigned int thinktime_blocks;
+    // zhou: "fsync=int"
+    //       How many I/Os to perform before issuing an fsync(2) of dirty data. If 0, don't sync. Default: 0.
 	unsigned int fsync_blocks;
+    // zhou: "fdatasync=int"
+    //       Like fsync, but uses fdatasync(2) instead to only sync the data parts of the file. Default: 0.
 	unsigned int fdatasync_blocks;
 	unsigned int barrier_blocks;
 	unsigned long long start_delay;
@@ -187,6 +204,8 @@ struct thread_options {
 	fio_fp64_t ss_limit;
 	unsigned long long ss_dur;
 	unsigned long long ss_ramp_time;
+    // zhou: "overwrite=bool ",
+    //       If writing, setup the file first and do overwrites. Default: false
 	unsigned int overwrite;
 	unsigned int bw_avg_time;
 	unsigned int iops_avg_time;
@@ -312,7 +331,8 @@ struct thread_options {
 	int flow;
 	int flow_watermark;
 	unsigned int flow_sleep;
-
+    // zhou: "offset_increment=int"
+    //       If this is provided, then the real offset becomes the offset + offset_increment * thread_number, where the thread number is a counter that starts at 0 and is incremented for each job. This option is useful if there are several jobs which are intended to operate on a file in parallel in disjoint segments, with even spacing between the starting points.
 	unsigned long long offset_increment;
 	unsigned long long number_ios;
 
@@ -403,6 +423,8 @@ struct thread_options_pack {
 	uint32_t create_fsync;
 	uint32_t create_on_open;
 	uint32_t create_only;
+    // zhou: "end_fsync=bool"
+    //       Sync file contents when job exits. Default: false.
 	uint32_t end_fsync;
 	uint32_t pre_read;
 	uint32_t sync_io;
@@ -441,6 +463,8 @@ struct thread_options_pack {
 	uint32_t norandommap;
 	uint32_t softrandommap;
 	uint32_t bs_unaligned;
+    // zhou: "fsync_on_close=bool"
+    //       If true, sync file contents on close. This differs from end_fsync in that it will happen on every close, not just at the end of the job. Default: false.
 	uint32_t fsync_on_close;
 	uint32_t bs_is_seq_rand;
 
@@ -504,6 +528,10 @@ struct thread_options_pack {
 	uint32_t cpus_allowed_policy;
 	uint32_t iolog;
 	uint32_t rwmixcycle;
+    // zhou: "rwmixread=int
+    //  Percentage of a mixed workload that should be reads. Default: 50.
+    //  rwmixwrite=int
+    //  Percentage of a mixed workload that should be writes. If rwmixread and rwmixwrite are given and do not sum to 100%, the latter of the two overrides the first. This may interfere with a given rate setting, if fio is asked to limit reads or writes to a certain rate. If that is the case, then the distribution may be skewed. Default: 50.
 	uint32_t rwmix[DDIR_RWDIR_CNT];
 	uint32_t nice;
 	uint32_t ioprio;

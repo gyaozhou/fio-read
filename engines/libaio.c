@@ -184,6 +184,8 @@ struct aio_ring {
 
 #define AIO_RING_MAGIC	0xa10a10a1
 
+// zhou: "(libaio)userspace_reap
+//        Normally, with the libaio engine in use, fio will use the io_getevents system call to reap newly returned events. With this flag turned on, the AIO ring will be read directly from user-space to reap events. The reaping mode is only enabled when polling for a minimum of 0 events (eg when iodepth_batch_complete=0). "
 static int user_io_getevents(io_context_t aio_ctx, unsigned int max,
 			     struct io_event *events)
 {

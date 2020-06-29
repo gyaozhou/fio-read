@@ -16,6 +16,7 @@ struct zoned_block_device_info;
 /*
  * The type of object we are working on
  */
+// zhou:
 enum fio_filetype {
 	FIO_TYPE_FILE = 1,		/* plain file */
 	FIO_TYPE_BLOCK,			/* block device */

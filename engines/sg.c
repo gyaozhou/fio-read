@@ -36,7 +36,7 @@
  *    io_u_mark_depth()			called in td_io_queue()
  *    io_u_mark_submit/complete()	called in queue()
  *    issue_time			set in td_io_queue()
- *  
+ *
  * In async mode:
  *  /dev/sgY with direct=0 and sync=0
  *   RW: read and write operations are submitted in queue()
@@ -594,6 +594,7 @@ static void fio_sgio_unmap_setup(struct sg_io_hdr *hdr, struct sgio_trim *st)
 	return;
 }
 
+// zhou;
 static enum fio_q_status fio_sgio_queue(struct thread_data *td,
 					struct io_u *io_u)
 {

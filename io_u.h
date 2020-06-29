@@ -103,6 +103,7 @@ struct io_u {
 	 */
 	int (*end_io)(struct thread_data *, struct io_u **);
 
+    // zhou: shared between different engine.
 	union {
 #ifdef CONFIG_LIBAIO
 		struct iocb iocb;
